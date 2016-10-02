@@ -41,7 +41,7 @@ public abstract class AbstractAppiumIT extends AbstractIT {
     public void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("deviceName", "Android Emulator");
-        capabilities.setCapability("platformVersion", "4.4");
+        capabilities.setCapability("platformVersion", "6.0");
         capabilities.setCapability("app", app.getAbsolutePath());
         capabilities.setCapability("noSign", true);
         capabilities.setCapability("appPackage", "com.github.psorobka.appium");

@@ -19,12 +19,12 @@ limitations under the License.
     <artifactId>appium-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
 
-    <name>Appium Maven Plugin 1.0</name>
+    <name>Appium Maven Plugin</name>
 
     <parent>
         <groupId>com.github.psorobka</groupId>
         <artifactId>appium-maven-plugin-parent</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.2-SNAPSHOT</version>
     </parent>
 
     <dependencies>
@@ -70,72 +70,5 @@ limitations under the License.
                 </executions>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-invoker-plugin</artifactId>
-                    <configuration>
-                        <detail>true</detail>
-                        <streamLogs>true</streamLogs>
-                        <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-                        <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
-                        <goals>
-                            <goal>verify</goal>
-                        </goals>
-                        <projectsDirectory>${basedir}/src/test/it</projectsDirectory>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>integration-test</id>
-                            <goals>
-                                <goal>install</goal>
-                                <goal>run</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
-        
-    <profiles>
-        <profile>
-            <id>integration-test</id>
-            <activation>
-                <property>
-                    <name>full-integration-test</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-invoker-plugin</artifactId>                       
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>use-installed-node-and-appium</id>
-            <activation>
-                <property>
-                    <name>full-integration-test</name>
-                </property>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <artifactId>maven-invoker-plugin</artifactId>                       
-                            <configuration>
-                                <properties>
-                                    <appium.home>../../../../node/npm/node_modules/appium</appium.home>
-                                    <node.home>../../../../node</node.home>
-                                </properties>
-                            </configuration>
-                        </plugin>                        
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-    </profiles>
 </project>

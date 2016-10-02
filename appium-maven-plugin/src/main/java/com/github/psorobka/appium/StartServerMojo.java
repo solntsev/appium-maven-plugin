@@ -37,38 +37,13 @@ public class StartServerMojo extends AbstractMojo {
 
     @Parameter(defaultValue = "${project.build.directory}", readonly = true, required = true)
     private File target;
-    @Parameter(property = "node.home", required = false)
-    private File nodeHome;
-    @Parameter(property = "appium.home", required = true, defaultValue = "${user.home}/node_modules/appium")
-    private File appiumHome;
 
     @Override
     public void execute() throws MojoExecutionException {
         try {
             getLog().info("Starting Appium server...");
-            getLog().debug("Node home: " + nodeHome);
-            getLog().debug("Appium home: " + appiumHome);
-            String nodeBin;
-            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                nodeBin = "node.exe";
-            } else {
-                nodeBin = "node";
-            }
-            if (nodeHome != null) {
-                File nodeBinFile = new File(nodeHome, nodeBin);
-                if (!nodeBinFile.exists()) {
-                    throw new MojoExecutionException("Node binary does not exist: " + nodeBinFile);
-                }
-                nodeBin = nodeBinFile.getAbsolutePath();
-            }
-            getLog().debug("Node bin: " + nodeBin);
-            File appiumJsFile = new File(appiumHome.getAbsoluteFile(), "bin" + File.separator + "appium.js");
-            getLog().debug("Appium js: " + appiumJsFile);
-            if (!appiumJsFile.exists()) {
-                throw new MojoExecutionException("Appium js does not exist: " + appiumJsFile);
-            }
             ProcessBuilder processBuilder = new ProcessBuilder();
-            processBuilder.command(nodeBin, appiumJsFile.getAbsolutePath(), "--log-timestamp", "--log", new File(target, "appiumLog.txt").getAbsolutePath());
+            processBuilder.command("appium", "--log-timestamp", "--log", new File(target, "appiumLog.txt").getAbsolutePath());
             processBuilder.redirectError(new File(target, "appiumErrorLog.txt"));
             processBuilder.redirectOutput(new File(target, "appiumOutputLog.txt"));
             getLog().debug("Appium server commands " + processBuilder.command());
